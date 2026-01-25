@@ -86,64 +86,64 @@ export default function HomePage() {
       </section>
 
       <section className="flex w-full justify-center bg-[#FAFAFA]">
-        <div className="flex h-[770px] w-full max-w-[1440px] justify-center">
-          <div className="flex h-full w-[1050px] flex-col items-center gap-[48px]">
-            <div className="mt-[80px] flex h-[62px] w-[607px] flex-col items-center gap-[10px] text-center">
+        <div className="flex w-full max-w-[1440px] justify-center md:h-[770px]">
+          <div className="flex w-full flex-col items-center gap-[48px] px-[40.5px] py-[80px] md:h-full md:w-[1050px] md:px-0 md:py-0">
+            <div className="flex w-[333px] flex-col items-center gap-[10px] text-center md:mt-[80px] md:h-[62px] md:w-[607px]">
               <p className="font-['Montserrat'] text-[24px] font-bold leading-[32px] tracking-[0.1px] text-[#252B42]">
                 EDITOR&apos;S PICK
               </p>
-                <p className="font-['Montserrat'] text-[14px] font-normal leading-[20px] tracking-[0.2px] text-[#737373]">
+              <p className="font-['Montserrat'] text-[14px] font-normal leading-[20px] tracking-[0.2px] text-[#737373] md:text-[14px]">
                 Problems trying to resolve the conflict between
               </p>
             </div>
 
-            <div className="flex h-[500px] w-full gap-[30px]">
-              <div className="relative flex h-[500px] w-[510px] overflow-hidden bg-white">
+            <div className="flex w-[333px] flex-col gap-[30px] md:h-[500px] md:w-full md:flex-row md:gap-[30px]">
+              <div className="relative flex h-[500px] w-[324px] overflow-hidden bg-white md:h-[500px] md:w-[510px]">
                 <img
                   src={editorsPickMen}
                   alt="Men"
                   className="h-full w-full object-cover"
                 />
-                <div className="absolute left-[31px] top-[426px] flex h-[48px] w-[170px] items-center justify-center bg-white">
+                <div className="absolute left-[31px] top-[426px] flex h-[48px] w-[170px] items-center justify-center bg-white md:left-[31px] md:top-[426px]">
                   <span className="text-sm font-semibold text-[#252B42]">
                     MEN
                   </span>
                 </div>
               </div>
 
-              <div className="relative flex h-[500px] w-[240px] overflow-hidden bg-white">
+              <div className="relative flex h-[500px] w-[325px] overflow-hidden bg-white md:h-[500px] md:w-[240px]">
                 <img
                   src={editorsPickWomen}
                   alt="Women"
                   className="h-full w-full object-cover"
                 />
-                <div className="absolute left-[21px] top-[434px] flex h-[48px] w-[136px] items-center justify-center bg-white">
+                <div className="absolute left-[63.5px] top-[434px] flex h-[48px] w-[136px] items-center justify-center bg-white md:left-[21px] md:top-[434px]">
                   <span className="text-sm font-semibold text-[#252B42]">
                     WOMEN
                   </span>
                 </div>
               </div>
 
-              <div className="flex h-[500px] w-[240px] flex-col gap-[16px]">
-                <div className="relative flex h-[242px] w-[240px] overflow-hidden bg-white">
+              <div className="flex w-[325px] flex-col gap-[16px] md:h-[500px] md:w-[240px]">
+                <div className="relative flex h-[242px] w-[325px] overflow-hidden bg-white md:h-[242px] md:w-[240px]">
                   <img
                     src={editorsPickAccessories}
                     alt="Accessories"
                     className="h-full w-full object-cover"
                   />
-                  <div className="absolute left-[14px] top-[171px] flex h-[48px] w-[170px] items-center justify-center bg-white">
+                  <div className="absolute left-[14px] top-[171px] flex h-[48px] w-[170px] items-center justify-center bg-white md:left-[14px] md:top-[171px]">
                     <span className="text-sm font-semibold text-[#252B42]">
                       ACCESSORIES
                     </span>
                   </div>
                 </div>
-                <div className="relative flex h-[242px] w-[240px] overflow-hidden bg-white">
+                <div className="relative flex h-[242px] w-[325px] overflow-hidden bg-white md:h-[242px] md:w-[240px]">
                   <img
                     src={editorsPickKids}
                     alt="Kids"
                     className="h-full w-full object-cover"
                   />
-                  <div className="absolute left-[18px] top-[176px] flex h-[48px] w-[120px] items-center justify-center bg-white">
+                  <div className="absolute left-[18px] top-[176px] flex h-[48px] w-[120px] items-center justify-center bg-white md:left-[18px] md:top-[176px]">
                     <span className="text-sm font-semibold text-[#252B42]">
                       KIDS
                     </span>
@@ -156,25 +156,27 @@ export default function HomePage() {
       </section>
 
       <section className="flex w-full justify-center bg-white">
-        <div className="flex h-[1652px] w-full max-w-[1440px] justify-center">
-          <div className="flex h-full w-[1124px] flex-col items-center gap-[80px]">
-            <div className="mt-[80px] flex h-[102px] w-[691px] flex-col items-center gap-[10px] text-center">
-              <p className="text-xl text-[#737373]">Featured Products</p>
+        <div className="flex w-full max-w-[1440px] justify-center md:h-[1652px]">
+          <div className="flex w-full flex-col items-center gap-[48px] px-[43px] py-[80px] md:h-full md:w-[1124px] md:px-0 md:py-0">
+            <div className="flex w-[300px] flex-col items-center gap-[10px] text-center md:mt-[80px] md:h-[102px] md:w-[691px]">
+              <p className="text-[20px] font-normal leading-[30px] text-[#737373]">
+                Featured Products
+              </p>
               <p className="font-['Montserrat'] text-[24px] font-bold leading-[32px] tracking-[0.1px] text-[#252B42]">
                 BESTSELLER PRODUCTS
               </p>
-                <p className="font-['Montserrat'] text-[14px] font-normal leading-[20px] tracking-[0.2px] text-[#737373]">
+              <p className="font-['Montserrat'] text-[14px] font-normal leading-[20px] tracking-[0.2px] text-[#737373]">
                 Problems trying to resolve the conflict between
               </p>
             </div>
 
-            <div className="flex h-[615px] w-[1049px] gap-[30px]">
+            <div className="flex w-[328px] flex-col items-center gap-[30px] md:h-[615px] md:w-[1049px] md:flex-row md:gap-[30px]">
               {products.slice(0, 4).map((product, index) => (
                 <ProductCard key={`${product.title}-top-${index}`} {...product} />
               ))}
             </div>
 
-            <div className="flex h-[615px] w-[1049px] gap-[30px]">
+            <div className="flex w-[328px] flex-col items-center gap-[30px] md:h-[615px] md:w-[1049px] md:flex-row md:gap-[30px]">
               {products.slice(4, 8).map((product, index) => (
                 <ProductCard key={`${product.title}-bottom-${index}`} {...product} />
               ))}
@@ -184,38 +186,33 @@ export default function HomePage() {
       </section>
 
       <section className="flex w-full justify-center bg-white">
-        <div className="relative flex h-[709px] w-full max-w-[1440px] items-center justify-center overflow-hidden rounded-[5px] border border-[#DEDEDE] bg-[#23856D]">
-          <div className="flex h-full w-[1036px] flex-col pt-[112px] text-white">
-            <div className="flex h-[599px] w-[1049px] gap-[30px]">
-              <div className="flex h-[432px] w-[509px] flex-col gap-[30px] pt-[60px]">
-                <p className="h-[30px] font-['Montserrat'] text-[20px] font-normal leading-[30px] tracking-[0.2px]">
+        <div className="relative flex h-[1230px] w-full max-w-[1440px] items-center justify-center overflow-hidden rounded-[5px] border border-[#DEDEDE] bg-[#23856D] md:h-[709px] md:rounded-[5px]">
+          <div className="flex h-full w-full flex-col px-4 pt-[44px] text-white md:w-[1036px] md:px-0 md:pt-[112px]">
+            <div className="flex h-full w-full flex-col gap-[30px] md:h-[599px] md:w-[1049px] md:flex-row">
+              <div className="flex w-full flex-col items-center gap-[35px] text-center md:h-[432px] md:w-[509px] md:items-start md:gap-[30px] md:pt-[60px] md:text-left">
+                <p className="text-base font-normal leading-[24px] tracking-[0.2px] md:h-[30px] md:text-[20px] md:leading-[30px]">
                   SUMMER 2020
                 </p>
-                <h3 className="h-[160px] font-['Montserrat'] text-[58px] font-bold leading-[80px] tracking-[0.2px]">
-                  Vita Classic
-                  <span className="block">Product</span>
+                <h3 className="font-['Montserrat'] text-[40px] font-bold leading-[50px] tracking-[0.2px] md:h-[160px] md:text-[58px] md:leading-[80px]">
+                  VITA CLASSIC
+                  <span className="block">PRODUCT</span>
                 </h3>
-                <p className="h-[40px] w-[341px] font-['Montserrat'] text-[14px] font-normal leading-[20px] tracking-[0.2px]">
+                <p className="w-[291px] font-['Montserrat'] text-[14px] font-normal leading-[20px] tracking-[0.2px] md:h-[40px] md:w-[341px]">
                   We know how large objects will act, but we know how are
                   objects will act, but we know
                 </p>
-                <div className="flex h-[52px] w-[295px] items-center gap-[34px]">
-                  <span className="text-2xl font-semibold leading-[32px]">
-                    $16.48
-                  </span>
-                  <button
-                    type="button"
-                    className="flex h-[52px] w-[184px] items-center justify-center rounded-[5px] bg-[#2DC071] text-base font-semibold leading-[22px] text-white"
-                  >
-                    Add To Cart
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="flex h-[62px] w-[221px] items-center justify-center rounded-[5px] bg-[#2DC071] font-['Montserrat'] text-[24px] font-bold leading-[32px] tracking-[0.1px] text-white md:h-[52px] md:w-[184px] md:text-base md:leading-[22px]"
+                >
+                  ADD TO CART
+                </button>
               </div>
-              <div className="flex h-[685px] w-[510px] items-start pl-[33.5px]">
+              <div className="flex w-full flex-1 items-center justify-center md:h-[685px] md:w-[510px] md:items-start md:pl-[33.5px]">
                 <img
                   src={vitaClassicImage}
                   alt="Vita Classic Product"
-                  className="h-[685px] w-[443px] object-contain"
+                  className="h-[693px] w-[443px] object-contain md:h-[685px]"
                 />
               </div>
             </div>
@@ -223,13 +220,13 @@ export default function HomePage() {
 
           <button
             type="button"
-            className="absolute left-[40px] top-[401px] flex h-[44.47px] w-[24px] items-center justify-center text-white"
+            className="absolute left-[40px] top-[589px] flex h-[44.47px] w-[24px] items-center justify-center text-white md:top-[401px]"
           >
             <ChevronLeft className="h-[44px] w-[24px]" />
           </button>
           <button
             type="button"
-            className="absolute right-[35px] top-[401px] flex h-[44.47px] w-[24px] items-center justify-center text-white"
+            className="absolute right-[31px] top-[589px] flex h-[44.47px] w-[24px] items-center justify-center text-white md:right-[35px] md:top-[401px]"
           >
             <ChevronRight className="h-[44px] w-[24px]" />
           </button>
@@ -242,37 +239,37 @@ export default function HomePage() {
       </section>
 
       <section className="flex w-full justify-center bg-white">
-        <div className="flex h-[682px] w-full max-w-[1440px] justify-center">
-          <div className="flex h-[682px] w-[1439px] gap-[30px] px-[132px]">
-            <div className="flex h-[682px] w-[704px] items-center justify-center">
+        <div className="flex w-full max-w-[1440px] justify-center py-[48px] md:h-[682px] md:py-0">
+          <div className="flex w-full flex-col gap-[32px] px-4 md:h-[682px] md:w-[1439px] md:flex-row md:gap-[30px] md:px-[132px]">
+            <div className="flex h-[320px] w-full items-center justify-center md:h-[682px] md:w-[704px]">
               <img
                 src={neuralUniverseImage}
                 alt="Part of the Neural Universe"
-                className="h-[682px] w-[704px] object-cover"
+                className="h-full w-full object-cover md:h-[682px] md:w-[704px]"
               />
             </div>
 
-            <div className="mt-[178px] flex h-[326px] w-[573px] flex-col gap-[30px]">
-              <p className="h-[24px] text-base font-semibold text-[#BDBDBD]">
+            <div className="flex h-auto w-full flex-col gap-[20px] md:mt-[178px] md:h-[326px] md:w-[573px] md:gap-[30px]">
+              <p className="h-auto text-base font-semibold text-[#BDBDBD] md:h-[24px]">
                 SUMMER 2020
               </p>
-              <h3 className="h-[100px] w-[375px] text-[40px] font-bold leading-[50px] text-[#252B42]">
+              <h3 className="h-auto w-full text-[28px] font-bold leading-[36px] text-[#252B42] md:h-[100px] md:w-[375px] md:text-[40px] md:leading-[50px]">
                 Part of the Neural
                 <span className="block">Universe</span>
               </h3>
-              <p className="h-[60px] w-[376px] font-['Montserrat'] text-[20px] font-normal leading-[30px] tracking-[0.2px] text-[#737373]">
+              <p className="h-auto w-full font-['Montserrat'] text-[16px] font-normal leading-[24px] tracking-[0.2px] text-[#737373] md:h-[60px] md:w-[376px] md:text-[20px] md:leading-[30px]">
                 We know how large objects will act, but things on a small scale.
               </p>
-              <div className="flex h-[52px] w-[339px] items-center gap-[10px]">
+              <div className="flex w-full flex-col items-start gap-[10px] sm:flex-row sm:items-center md:h-[52px] md:w-[339px]">
                 <button
                   type="button"
-                  className="flex h-[52px] w-[156px] items-center justify-center rounded-[5px] bg-[#2DC071] text-base font-semibold leading-[22px] text-white"
+                  className="flex h-[48px] w-[156px] items-center justify-center rounded-[5px] bg-[#2DC071] text-sm font-semibold leading-[20px] text-white md:h-[52px] md:text-base md:leading-[22px]"
                 >
                   Buy Now
                 </button>
                 <button
                   type="button"
-                  className="flex h-[52px] w-[173px] items-center justify-center rounded-[5px] border border-[#2DC071] text-base font-semibold leading-[22px] text-[#2DC071]"
+                  className="flex h-[48px] w-[173px] items-center justify-center rounded-[5px] border border-[#2DC071] text-sm font-semibold leading-[20px] text-[#2DC071] md:h-[52px] md:text-base md:leading-[22px]"
                 >
                   Read More
                 </button>
@@ -283,9 +280,9 @@ export default function HomePage() {
       </section>
 
       <section className="flex w-full justify-center bg-white">
-        <div className="flex h-[1044px] w-full max-w-[1440px] justify-center">
-          <div className="flex h-full w-[1050px] flex-col items-center gap-[80px]">
-            <div className="mt-[112px] flex h-[134px] w-[691px] flex-col items-center gap-[10px] text-center">
+        <div className="flex w-full max-w-[1440px] justify-center py-[64px] md:h-[1044px] md:py-0">
+          <div className="flex w-full flex-col items-center gap-[40px] px-4 md:h-full md:w-[1050px] md:gap-[80px] md:px-0">
+            <div className="flex w-full max-w-[691px] flex-col items-center gap-[10px] text-center md:mt-[112px] md:h-[134px]">
               <p className="text-base font-semibold text-[#23A6F0]">
                 Practice Advice
               </p>
@@ -299,7 +296,7 @@ export default function HomePage() {
                 </p>
             </div>
 
-            <div className="flex h-[606px] w-[1045px] gap-[30px]">
+            <div className="flex h-auto w-full flex-col gap-[20px] md:h-[606px] md:w-[1045px] md:flex-row md:gap-[30px]">
               {[
                 {
                   image: featuredPostOne,
@@ -313,9 +310,9 @@ export default function HomePage() {
               ].map((post, index) => (
                 <article
                   key={`post-${index}`}
-                  className="flex h-[606px] w-[348px] flex-col bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                  className="flex h-auto w-full flex-col bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] md:h-[606px] md:w-[348px]"
                 >
-                  <div className="relative flex h-[300px] w-full overflow-hidden">
+                  <div className="relative flex h-[240px] w-full overflow-hidden md:h-[300px]">
                     <img
                       src={post.image}
                       alt="Featured post"
@@ -325,7 +322,7 @@ export default function HomePage() {
                       NEW
                     </span>
                   </div>
-                  <div className="flex h-[306px] w-full flex-col gap-[10px] px-[25px] pt-[25px] text-[#737373]">
+                  <div className="flex h-auto w-full flex-col gap-[10px] px-[20px] pt-[20px] text-[#737373] md:h-[306px] md:px-[25px] md:pt-[25px]">
                     <div className="flex items-center gap-[15px] text-xs">
                       <span className="text-[#8EC2F2]">Google</span>
                       <span>Trending</span>

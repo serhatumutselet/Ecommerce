@@ -4,15 +4,15 @@ export default function Footer() {
   return (
     <footer className="flex w-full flex-col bg-white">
       <div className="flex w-full justify-center bg-[#FAFAFA]">
-        <div className="flex h-[142px] w-full max-w-[1440px] justify-center">
-          <div className="flex h-full w-[1050px] flex-col justify-center">
-            <div className="flex h-[58px] w-full items-center justify-between">
-              <div className="flex h-[58px] w-[187px] items-center">
+        <div className="flex w-full max-w-[1440px] justify-center py-[24px] md:h-[142px] md:py-0">
+          <div className="flex w-full flex-col justify-center px-4 md:h-full md:w-[1050px] md:px-0">
+            <div className="flex w-full flex-col items-center justify-between gap-[16px] md:h-[58px] md:flex-row">
+              <div className="flex h-[58px] w-[187px] items-center justify-center md:justify-start">
                 <p className="font-['Montserrat'] text-[24px] font-bold leading-[32px] tracking-[0.1px] text-[#252B42]">
                   Bandage
                 </p>
               </div>
-              <div className="flex h-[24px] w-[112px] items-center gap-[20px] text-[#23A6F0]">
+              <div className="flex h-[24px] w-[112px] items-center justify-center gap-[20px] text-[#23A6F0]">
                 <Facebook className="h-[24px] w-[24px]" />
                 <Instagram className="h-[24px] w-[24px]" />
                 <Twitter className="h-[20px] w-[24px]" />
@@ -22,13 +22,13 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto h-px w-[1057px] bg-[#E6E6E6]" />
+      <div className="mx-auto h-px w-full max-w-[1057px] bg-[#E6E6E6]" />
 
       <div className="flex w-full justify-center bg-white">
-        <div className="flex h-[272px] w-full max-w-[1440px] justify-center">
-          <div className="flex h-full w-[1050px] flex-col pt-[50px]">
-            <div className="flex h-[170px] w-[1041px] gap-[30px]">
-              <div className="flex w-[148px] flex-col gap-[20px]">
+        <div className="flex w-full max-w-[1440px] justify-center py-[40px] md:h-[272px] md:py-0">
+          <div className="flex w-full flex-col px-4 md:h-full md:w-[1050px] md:px-0 md:pt-[50px]">
+            <div className="flex w-full flex-col gap-[24px] md:h-[170px] md:w-[1041px] md:flex-row md:gap-[30px]">
+              <div className="flex w-full flex-col gap-[20px] md:w-[148px]">
                 <p className="text-base font-semibold text-[#252B42]">
                   Company Info
                 </p>
@@ -39,7 +39,7 @@ export default function Footer() {
                   <p>Blog</p>
                 </div>
               </div>
-              <div className="flex w-[152px] flex-col gap-[20px]">
+              <div className="flex w-full flex-col gap-[20px] md:w-[152px]">
                 <p className="text-base font-semibold text-[#252B42]">Legal</p>
                 <div className="flex flex-col gap-[10px] text-sm text-[#737373]">
                   <p>About Us</p>
@@ -48,7 +48,7 @@ export default function Footer() {
                   <p>Blog</p>
                 </div>
               </div>
-              <div className="flex w-[148px] flex-col gap-[20px]">
+              <div className="flex w-full flex-col gap-[20px] md:w-[148px]">
                 <p className="text-base font-semibold text-[#252B42]">
                   Features
                 </p>
@@ -59,7 +59,7 @@ export default function Footer() {
                   <p>Unlimited Support</p>
                 </div>
               </div>
-              <div className="flex w-[152px] flex-col gap-[20px]">
+              <div className="flex w-full flex-col gap-[20px] md:w-[152px]">
                 <p className="text-base font-semibold text-[#252B42]">
                   Resources
                 </p>
@@ -70,12 +70,12 @@ export default function Footer() {
                   <p>API</p>
                 </div>
               </div>
-              <div className="flex w-[321px] flex-col gap-[20px]">
+              <div className="flex w-full flex-col gap-[20px] md:w-[321px]">
                 <p className="text-base font-semibold text-[#252B42]">
                   Get In Touch
                 </p>
-                <div className="flex h-[87px] w-[321px] flex-col gap-[1px]">
-                  <div className="relative flex h-[58px] w-[321px] overflow-hidden rounded-[5px] border border-[#E6E6E6] bg-[#F9F9F9]">
+                <div className="flex w-full flex-col gap-[1px] md:h-[87px] md:w-[321px]">
+                  <div className="relative flex h-[58px] w-full overflow-hidden rounded-[5px] border border-[#E6E6E6] bg-[#F9F9F9] md:w-[321px]">
                     <input
                       type="email"
                       placeholder="Your Email"
@@ -97,8 +97,8 @@ export default function Footer() {
       </div>
 
       <div className="flex w-full justify-center bg-[#FAFAFA]">
-        <div className="flex h-[74px] w-full max-w-[1440px] justify-center">
-          <div className="flex h-full w-[1050px] items-center">
+        <div className="flex w-full max-w-[1440px] justify-center py-[24px] md:h-[74px] md:py-0">
+          <div className="flex h-full w-full items-center justify-center px-4 text-center md:w-[1050px] md:justify-start md:px-0">
             <p className="text-sm text-[#737373]">
               Made With Love By Finland All Right Reserved
             </p>

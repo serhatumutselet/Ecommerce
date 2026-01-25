@@ -1,6 +1,6 @@
 export default function ProductCard({ image, title, category, price, oldPrice }) {
   return (
-    <div className="flex h-[615px] w-[239px] flex-col bg-white">
+    <div className="flex h-[615px] w-[348px] flex-col bg-white md:h-[615px] md:w-[239px]">
       <div className="flex h-[427px] w-full">
         <img src={image} alt={title} className="h-full w-full object-cover" />
       </div>

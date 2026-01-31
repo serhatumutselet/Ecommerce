@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ChevronDown,
@@ -15,6 +16,8 @@ import {
 } from 'lucide-react'
 
 export default function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   return (
     <header className="flex w-full flex-col">
       <div className="hidden h-[58px] w-full items-center bg-[#252B42] text-white md:flex">
@@ -93,6 +96,9 @@ export default function Header() {
               </button>
               <button
                 type="button"
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
+                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
                 className="flex h-[14px] w-[24px] items-center justify-center md:hidden"
               >
                 <Menu className="h-[14px] w-[24px]" />
@@ -108,7 +114,14 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="flex w-full flex-col items-center pb-[48px] pt-[8px] md:hidden">
+        <div
+          id="mobile-menu"
+          className={`flex w-full justify-center overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+            isMobileMenuOpen
+              ? 'max-h-[400px] pb-[30px] opacity-100'
+              : 'max-h-0 pb-0 opacity-0'
+          }`}
+        >
           <nav className="flex w-[123px] flex-col items-center gap-[30px] font-['Montserrat'] text-[30px] font-normal leading-[45px] text-[#737373]">
             <Link to="/">Home</Link>
             <Link to="/">Product</Link>

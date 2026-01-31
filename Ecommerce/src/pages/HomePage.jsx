@@ -76,7 +76,10 @@ const products = [
     oldPrice: '$6.48',
     image: bestsellerEight,
   },
-]
+].map((product, index) => ({
+  ...product,
+  id: `home-product-${index + 1}`,
+}))
 
 export default function HomePage() {
   return (
@@ -171,14 +174,22 @@ export default function HomePage() {
             </div>
 
             <div className="flex w-[328px] flex-col items-center gap-[30px] md:h-[615px] md:w-[1049px] md:flex-row md:gap-[30px]">
-              {products.slice(0, 4).map((product, index) => (
-                <ProductCard key={`${product.title}-top-${index}`} {...product} />
+              {products.slice(0, 4).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  {...product}
+                  to="/product"
+                />
               ))}
             </div>
 
             <div className="flex w-[328px] flex-col items-center gap-[30px] md:h-[615px] md:w-[1049px] md:flex-row md:gap-[30px]">
-              {products.slice(4, 8).map((product, index) => (
-                <ProductCard key={`${product.title}-bottom-${index}`} {...product} />
+              {products.slice(4, 8).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  {...product}
+                  to="/product"
+                />
               ))}
             </div>
           </div>

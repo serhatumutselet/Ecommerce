@@ -200,8 +200,9 @@ export default function ShopPage() {
         <div className="flex w-full max-w-[1440px] justify-center px-4 py-10 md:h-[1778px] md:px-0 md:py-0">
           <div className="grid w-full gap-8 md:w-[1124px] md:grid-cols-4 md:gap-x-[30px] md:gap-y-[48px] md:py-[48px]">
             {paginatedProducts.map((product) => (
-              <div
+              <Link
                 key={product.id}
+                to="/product"
                 className="flex w-full flex-col bg-white md:h-[488px]"
               >
                 <div className="h-full w-full md:h-[300px]">
@@ -229,7 +230,7 @@ export default function ShopPage() {
                     <span className="h-[16px] w-[16px] rounded-full bg-[#23856D]" />
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
 
             <div className="col-span-full flex justify-center pt-4 md:pt-[0] md:pb-[48px]">

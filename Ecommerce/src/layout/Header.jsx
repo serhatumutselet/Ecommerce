@@ -60,7 +60,7 @@ export default function Header() {
 
             <nav className="hidden h-[78px] w-[361px] items-center gap-[15px] font-['Montserrat'] text-[14px] font-bold leading-[24px] tracking-[0.2px] text-[#737373] md:flex">
               <Link to="/">Home</Link>
-              <Link to="/" className="flex items-center gap-[5px] text-[#252B42]">
+              <Link to="/shop" className="flex items-center gap-[5px] text-[#252B42]">
                 Shop
                 <ChevronDown className="h-[10px] w-[6px]" />
               </Link>

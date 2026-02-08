@@ -67,10 +67,23 @@ export default function Header() {
                 Shop
                 <ChevronDown className="h-[10px] w-[6px]" />
               </Link>
-              <Link to="/">About</Link>
+              <Link to="/about">About</Link>
               <Link to="/">Blog</Link>
-              <Link to="/">Contact</Link>
-              <Link to="/">Pages</Link>
+              <Link to="/contact">Contact</Link>
+              <div className="group relative flex items-center">
+                <div className="flex items-center gap-[5px] text-[#737373] group-hover:text-[#252B42]">
+                  <span>Pages</span>
+                  <ChevronDown className="h-[10px] w-[6px]" />
+                </div>
+                <div className="absolute left-0 top-full z-20 mt-[10px] w-[160px] rounded-[5px] border border-[#E6E6E6] bg-white py-[10px] opacity-0 shadow-[0_13px_19px_0_rgba(0,0,0,0.07)] transition-opacity duration-200 group-hover:opacity-100">
+                  <Link
+                    to="/team"
+                    className="flex w-full px-[16px] py-[8px] text-[#252B42] hover:text-[#23A6F0]"
+                  >
+                    Team
+                  </Link>
+                </div>
+              </div>
             </nav>
 
             <div className="flex h-[54px] w-auto items-center justify-end gap-[24px] text-[#252B42] md:gap-[10px] md:text-[#23A6F0]">
@@ -126,7 +139,7 @@ export default function Header() {
             <Link to="/">Home</Link>
             <Link to="/">Product</Link>
             <Link to="/">Pricing</Link>
-            <Link to="/">Contact</Link>
+            <Link to="/contact">Contact</Link>
           </nav>
         </div>
       </div>

@@ -11,8 +11,8 @@ export default function ProductCard({
 }) {
   const isCompact = variant === 'compact'
   const containerClass = isCompact
-    ? 'flex h-[442px] w-full flex-col bg-white md:w-[239px]'
-    : 'flex h-[615px] w-[348px] flex-col bg-white md:h-[615px] md:w-[239px]'
+    ? 'flex h-[442px] w-full flex-col bg-white md:w-[239px] cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg'
+    : 'flex h-[615px] w-[348px] flex-col bg-white md:h-[615px] md:w-[239px] cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg'
   const imageClass = isCompact ? 'flex h-[280px] w-full' : 'flex h-[427px] w-full'
   const contentClass = isCompact
     ? 'flex h-[162px] w-full flex-col items-start gap-[10px] px-[25px] pt-[25px]'
@@ -20,8 +20,8 @@ export default function ProductCard({
 
   const content = (
     <>
-      <div className={imageClass}>
-        <img src={image} alt={title} className="h-full w-full object-cover" />
+      <div className={`${imageClass} bg-white`}>
+        <img src={image} alt={title} className="h-full w-full object-contain" />
       </div>
       <div className={contentClass}>
         <p className="text-sm font-semibold text-[#252B42]">{title}</p>

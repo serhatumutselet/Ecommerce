@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import { ArrowRight, BarChart2, Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
 import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
+import apiClient from '../api/axios'
 import editorsPickMen from '../assets/Editors Pick/Men.png'
 import editorsPickWomen from '../assets/Editors Pick/Women.png'
 import editorsPickAccessories from '../assets/Editors Pick/Accesories.png'
@@ -19,7 +21,7 @@ import featuredPostOne from '../assets/Featured Posts/1.png'
 import featuredPostTwo from '../assets/Featured Posts/2.png'
 import featuredPostThree from '../assets/Featured Posts/3.png'
 
-const products = [
+const fallbackProducts = [
   {
     title: 'Graphic Design',
     category: 'English Department',
@@ -81,7 +83,114 @@ const products = [
   id: `home-product-${index + 1}`,
 }))
 
+const normalizeText = (value) =>
+  String(value || '')
+    .toLowerCase()
+    .replace(/[çÇ]/g, 'c')
+    .replace(/[ğĞ]/g, 'g')
+    .replace(/[ıİ]/g, 'i')
+    .replace(/[öÖ]/g, 'o')
+    .replace(/[şŞ]/g, 's')
+    .replace(/[üÜ]/g, 'u')
+
+const toSlug = (value) =>
+  normalizeText(value)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+const getCategoryName = (category) =>
+  category?.title || category?.name || category?.category || 'Category'
+
+const getCategoryId = (category) =>
+  category?.id ?? category?.category_id ?? category?._id ?? ''
+
+const getGenderSlug = (category) => {
+  const raw = String(
+    category?.gender ?? category?.gender_code ?? category?.code ?? ''
+  ).toLowerCase()
+  if (
+    raw.includes('kadin') ||
+    raw.includes('women') ||
+    raw.includes('woman') ||
+    raw === 'f' ||
+    raw === 'female' ||
+    raw === 'k' ||
+    raw.startsWith('k:')
+  ) {
+    return 'kadin'
+  }
+  if (
+    raw.includes('erkek') ||
+    raw.includes('men') ||
+    raw.includes('man') ||
+    raw === 'm' ||
+    raw === 'male' ||
+    raw === 'e' ||
+    raw.startsWith('e:')
+  ) {
+    return 'erkek'
+  }
+  return 'kadin'
+}
+
+const buildProductLink = (product, category) => {
+  const productName = product?.name || product?.title || 'product'
+  const productSlug = toSlug(productName)
+  const productId = product?.id ?? product?.product_id ?? product?.productId
+  const categorySlug = toSlug(getCategoryName(category))
+  const gender = getGenderSlug(category)
+  const categoryId = getCategoryId(category) || 0
+  return `/shop/${gender}/${categorySlug}/${categoryId}/${productSlug}/${productId}`
+}
+
+const formatPrice = (value) =>
+  new Intl.NumberFormat('tr-TR', {
+    style: 'currency',
+    currency: 'TRY',
+  }).format(Number(value) || 0)
+
 export default function HomePage() {
+  const [bestsellers, setBestsellers] = useState(fallbackProducts)
+
+  useEffect(() => {
+    const fetchBestsellers = async () => {
+      try {
+        const response = await apiClient.get('/products', {
+          params: { limit: 100, offset: 0 },
+        })
+        const items = response.data?.products || []
+        const sorted = [...items].sort(
+          (first, second) => (second.rating || 0) - (first.rating || 0)
+        )
+        const topItems = sorted.slice(0, 8)
+        if (topItems.length === 0) {
+          return
+        }
+        const next = topItems.map((product, index) => {
+          const category = product.category || {}
+          const image =
+            product?.images?.[0]?.url ||
+            product?.image ||
+            fallbackProducts[index]?.image
+          return {
+            id: product.id ?? `home-product-${index + 1}`,
+            title: product.name || 'Product',
+            category: getCategoryName(category),
+            price: formatPrice(product.price),
+            oldPrice: '',
+            image,
+            to: buildProductLink(product, category),
+          }
+        })
+        setBestsellers(next)
+      } catch (err) {
+        console.error('Failed to fetch bestseller products', err)
+      }
+    }
+
+    fetchBestsellers()
+  }, [])
+
   return (
     <div className="flex w-full flex-col">
       <section className="mx-auto flex w-full max-w-[1440px] flex-col">
@@ -174,21 +283,19 @@ export default function HomePage() {
             </div>
 
             <div className="flex w-[328px] flex-col items-center gap-[30px] md:h-[615px] md:w-[1049px] md:flex-row md:gap-[30px]">
-              {products.slice(0, 4).map((product) => (
+              {bestsellers.slice(0, 4).map((product) => (
                 <ProductCard
                   key={product.id}
                   {...product}
-                  to="/product"
                 />
               ))}
             </div>
 
             <div className="flex w-[328px] flex-col items-center gap-[30px] md:h-[615px] md:w-[1049px] md:flex-row md:gap-[30px]">
-              {products.slice(4, 8).map((product) => (
+              {bestsellers.slice(4, 8).map((product) => (
                 <ProductCard
                   key={product.id}
                   {...product}
-                  to="/product"
                 />
               ))}
             </div>

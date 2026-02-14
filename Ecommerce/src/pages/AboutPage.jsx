@@ -229,28 +229,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative flex w-full justify-center overflow-hidden bg-[#2A7CC7]">
-        <div className="absolute inset-0">
-          <div className="absolute right-0 top-0 h-full w-full md:w-[590px]">
-            <img
-              src={testimonialImage}
-              alt="Testimonial"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="absolute inset-0 bg-black/75" />
-        </div>
-
-        <div className="relative z-10 flex w-full max-w-[1440px] justify-center px-4 py-16 md:px-0 md:py-[112px]">
-          <div className="flex w-full max-w-[1050px] justify-center">
-            <div className="flex w-full flex-col gap-[24px] md:max-w-[438px]">
-              <h5 className="font-['Montserrat'] text-[16px] font-bold leading-[24px] text-white">
+      <section className="flex w-full justify-center bg-[#2A7CC7]">
+        <div className="flex w-full max-w-[1440px] flex-col md:flex-row">
+          <div className="flex w-full flex-col justify-center px-6 py-16 md:w-[850px] md:px-[195px] md:py-0">
+            <div className="flex w-full max-w-[438px] flex-col gap-[24px] text-white">
+              <h5 className="font-['Montserrat'] text-[16px] font-bold leading-[24px]">
                 WORK WITH US
               </h5>
-              <h2 className="font-['Montserrat'] text-[40px] font-bold leading-[50px] tracking-[0.2px] text-white md:text-[58px] md:leading-[80px]">
+              <h2 className="font-['Montserrat'] text-[40px] font-bold leading-[50px] tracking-[0.2px] md:text-[58px] md:leading-[80px]">
                 Now Let&apos;s grow Yours
               </h2>
-              <p className="font-['Montserrat'] text-[14px] font-normal leading-[20px] text-white">
+              <p className="font-['Montserrat'] text-[14px] font-normal leading-[20px]">
                 The gradual accumulation of information about atomic and
                 small-scale behavior during the first quarter of the 20th
                 century.
@@ -262,6 +251,13 @@ export default function AboutPage() {
                 Button
               </button>
             </div>
+          </div>
+          <div className="hidden w-full md:block md:h-[636px] md:w-[590px]">
+            <img
+              src={testimonialImage}
+              alt="Testimonial"
+              className="h-full w-full object-cover"
+            />
           </div>
         </div>
       </section>

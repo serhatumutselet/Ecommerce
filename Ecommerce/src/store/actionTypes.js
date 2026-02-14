@@ -1,0 +1,21 @@
+export const SET_USER = 'client/SET_USER'
+export const SET_ROLES = 'client/SET_ROLES'
+export const SET_THEME = 'client/SET_THEME'
+export const SET_LANGUAGE = 'client/SET_LANGUAGE'
+
+export const SET_CATEGORIES = 'product/SET_CATEGORIES'
+export const SET_PRODUCT_LIST = 'product/SET_PRODUCT_LIST'
+export const SET_TOTAL = 'product/SET_TOTAL'
+export const SET_FETCH_STATE = 'product/SET_FETCH_STATE'
+export const SET_PRODUCT = 'product/SET_PRODUCT'
+export const SET_PRODUCT_FETCH_STATE = 'product/SET_PRODUCT_FETCH_STATE'
+export const SET_SORT = 'product/SET_SORT'
+export const SET_LIMIT = 'product/SET_LIMIT'
+export const SET_OFFSET = 'product/SET_OFFSET'
+export const SET_FILTER = 'product/SET_FILTER'
+
+export const SET_CART = 'shoppingCart/SET_CART'
+export const SET_PAYMENT = 'shoppingCart/SET_PAYMENT'
+export const SET_ADDRESS = 'shoppingCart/SET_ADDRESS'
+export const ADD_TO_CART = 'shoppingCart/ADD_TO_CART'
+

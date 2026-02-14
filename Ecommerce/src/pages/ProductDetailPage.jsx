@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ChevronLeft,
   ChevronRight,
@@ -7,8 +7,11 @@ import {
   ShoppingCart,
   Star,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import ProductCard from '../components/ProductCard'
+import apiClient from '../api/axios'
 import productImageOne from '../assets/Bestseller Products/1.png'
 import productImageTwo from '../assets/Bestseller Products/2.png'
 import productImageThree from '../assets/Bestseller Products/3.png'
@@ -24,6 +27,8 @@ import leafLogo from '../assets/Company Logos/leaf.png'
 import stripeLogo from '../assets/Company Logos/stripe.png'
 import awsLogo from '../assets/Company Logos/aws.png'
 import redditLogo from '../assets/Company Logos/reddit.png'
+import { fetchProductById } from '../store/thunks/productThunks'
+import { addToCart } from '../store/actions/shoppingCartActions'
 
 const relatedProducts = [
   productImageOne,
@@ -43,6 +48,72 @@ const relatedProducts = [
   image,
 }))
 
+const normalizeText = (value) =>
+  String(value || '')
+    .toLowerCase()
+    .replace(/[çÇ]/g, 'c')
+    .replace(/[ğĞ]/g, 'g')
+    .replace(/[ıİ]/g, 'i')
+    .replace(/[öÖ]/g, 'o')
+    .replace(/[şŞ]/g, 's')
+    .replace(/[üÜ]/g, 'u')
+
+const toSlug = (value) =>
+  normalizeText(value)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+const getCategoryName = (category) =>
+  category?.title || category?.name || category?.category || 'Category'
+
+const getCategoryId = (category) =>
+  category?.id ?? category?.category_id ?? category?._id ?? ''
+
+const getGenderSlug = (category) => {
+  const raw = String(
+    category?.gender ?? category?.gender_code ?? category?.code ?? ''
+  ).toLowerCase()
+  if (
+    raw.includes('kadin') ||
+    raw.includes('women') ||
+    raw.includes('woman') ||
+    raw === 'f' ||
+    raw === 'female' ||
+    raw === 'k' ||
+    raw.startsWith('k:')
+  ) {
+    return 'kadin'
+  }
+  if (
+    raw.includes('erkek') ||
+    raw.includes('men') ||
+    raw.includes('man') ||
+    raw === 'm' ||
+    raw === 'male' ||
+    raw === 'e' ||
+    raw.startsWith('e:')
+  ) {
+    return 'erkek'
+  }
+  return 'kadin'
+}
+
+const buildProductLink = (product, category) => {
+  const productName = product?.name || product?.title || 'product'
+  const productSlug = toSlug(productName)
+  const productId = product?.id ?? product?.product_id ?? product?.productId
+  const categorySlug = toSlug(getCategoryName(category))
+  const gender = getGenderSlug(category)
+  const categoryId = getCategoryId(category) || 0
+  return `/shop/${gender}/${categorySlug}/${categoryId}/${productSlug}/${productId}`
+}
+
+const formatPrice = (value) =>
+  new Intl.NumberFormat('tr-TR', {
+    style: 'currency',
+    currency: 'TRY',
+  }).format(Number(value) || 0)
+
 const productGallery = [productImageOne, productImageTwo]
 
 const clientLogos = [
@@ -55,21 +126,111 @@ const clientLogos = [
 ]
 
 export default function ProductDetailPage() {
+  const { productId } = useParams()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const product = useSelector((state) => state.product.product)
+  const productFetchState = useSelector(
+    (state) => state.product.productFetchState
+  )
+  const [bestsellerProducts, setBestsellerProducts] = useState(relatedProducts)
+
+  useEffect(() => {
+    dispatch(fetchProductById(productId))
+  }, [dispatch, productId])
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [productId])
+
+  useEffect(() => {
+    const fetchBestsellers = async () => {
+      try {
+        const response = await apiClient.get('/products', {
+          params: { limit: 100, offset: 0 },
+        })
+        const items = response.data?.products || []
+        const sorted = [...items].sort(
+          (first, second) => (second.rating || 0) - (first.rating || 0)
+        )
+        const topItems = sorted.slice(0, 8)
+        if (topItems.length === 0) {
+          return
+        }
+        const next = topItems.map((item, index) => {
+          const category = item.category || {}
+          const image =
+            item?.images?.[0]?.url ||
+            item?.image ||
+            relatedProducts[index]?.image
+          return {
+            id: item.id ?? `related-product-${index + 1}`,
+            title: item.name || 'Product',
+            category: getCategoryName(category),
+            oldPrice: '',
+            price: formatPrice(item.price),
+            image,
+            to: buildProductLink(item, category),
+          }
+        })
+        setBestsellerProducts(next)
+      } catch (err) {
+        console.error('Failed to fetch bestseller products', err)
+      }
+    }
+
+    fetchBestsellers()
+  }, [])
+
+  const galleryImages = useMemo(() => {
+    const images = product?.images?.map((image) => image.url) || []
+    return images.length > 0 ? images : productGallery
+  }, [product])
+
   const [activeImageIndex, setActiveImageIndex] = useState(0)
-  const totalGalleryImages = productGallery.length
-  const currentImage = productGallery[activeImageIndex]
+  const [canAddToCart, setCanAddToCart] = useState(true)
+  const addToCartTimerRef = useRef(null)
+  const totalGalleryImages = galleryImages.length
+  const currentImage = galleryImages[activeImageIndex]
 
   const handlePrevImage = () => {
+    if (totalGalleryImages === 0) return
     setActiveImageIndex((prev) =>
       prev === 0 ? totalGalleryImages - 1 : prev - 1
     )
   }
 
   const handleNextImage = () => {
+    if (totalGalleryImages === 0) return
     setActiveImageIndex((prev) =>
       prev === totalGalleryImages - 1 ? 0 : prev + 1
     )
   }
+
+  const handleAddToCart = () => {
+    if (!product || !canAddToCart) return
+    dispatch(addToCart(product))
+    toast.success('Sepete eklendi.')
+    setCanAddToCart(false)
+    if (addToCartTimerRef.current) {
+      clearTimeout(addToCartTimerRef.current)
+    }
+    addToCartTimerRef.current = setTimeout(() => {
+      setCanAddToCart(true)
+    }, 500)
+  }
+  useEffect(() => {
+    setActiveImageIndex(0)
+  }, [productId, galleryImages.length])
+
+  useEffect(() => {
+    return () => {
+      if (addToCartTimerRef.current) {
+        clearTimeout(addToCartTimerRef.current)
+      }
+    }
+  }, [])
+
   return (
     <div className="flex w-full flex-col">
       <section className="flex w-full justify-center bg-[#FAFAFA]">
@@ -77,6 +238,13 @@ export default function ProductDetailPage() {
           <div className="flex w-full md:h-[44px] md:w-[1033px]">
             <div className="flex w-full md:h-[44px] md:w-[509px]">
               <div className="flex items-center gap-[15px] font-['Montserrat'] text-[14px] font-bold leading-[24px] tracking-[0.2px]">
+                <button
+                  type="button"
+                  onClick={() => navigate(-1)}
+                  className="text-[#23A6F0] hover:text-[#1d8ad2]"
+                >
+                  Back
+                </button>
                 <Link className="text-[#252B42]" to="/">
                   Home
                 </Link>
@@ -90,13 +258,18 @@ export default function ProductDetailPage() {
 
       <section className="flex w-full justify-center bg-[#FAFAFA]">
         <div className="flex w-full max-w-[1440px] justify-center px-4 pb-10 pt-6 md:h-[598px] md:px-0 md:py-0">
-          <div className="flex w-full flex-col gap-8 md:h-[598px] md:w-[1050px] md:flex-row md:items-center md:gap-[30px]">
+          <div className="relative flex w-full flex-col gap-8 md:h-[598px] md:w-[1050px] md:flex-row md:items-center md:gap-[30px]">
+            {productFetchState === 'FETCHING' && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70">
+                <span className="h-10 w-10 animate-spin rounded-full border-2 border-[#23A6F0] border-t-transparent" />
+              </div>
+            )}
             <div className="flex w-full flex-col gap-6 md:h-[550px] md:w-[510px] md:gap-0">
-              <div className="relative h-[300px] w-full overflow-hidden rounded-[5px] md:h-[450px] md:w-[506px]">
+              <div className="relative h-[300px] w-full overflow-hidden rounded-[5px] bg-white md:h-[450px] md:w-[506px]">
                 <img
                   src={currentImage}
                   alt="Single product"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-in-out"
+                  className="h-full w-full object-contain transition-transform duration-500 ease-in-out"
                 />
                 <button
                   type="button"
@@ -114,12 +287,12 @@ export default function ProductDetailPage() {
                 </button>
               </div>
               <div className="flex items-center gap-[19px] md:mt-[21px]">
-                {productGallery.map((image, index) => (
+                {galleryImages.map((image, index) => (
                   <button
                     key={`product-thumb-${index}`}
                     type="button"
                     onClick={() => setActiveImageIndex(index)}
-                    className={`h-[75px] w-[100px] border cursor-pointer ${
+                  className={`h-[75px] w-[100px] border cursor-pointer bg-white ${
                       activeImageIndex === index
                         ? 'border-[#23A6F0]'
                         : 'border-transparent'
@@ -128,7 +301,7 @@ export default function ProductDetailPage() {
                     <img
                       src={image}
                       alt={`Product thumbnail ${index + 1}`}
-                      className="h-full w-full object-cover transition-transform duration-500 ease-in-out"
+                    className="h-full w-full object-contain transition-transform duration-500 ease-in-out"
                     />
                   </button>
                 ))}
@@ -138,36 +311,41 @@ export default function ProductDetailPage() {
             <div className="flex w-full flex-col gap-4 md:h-[471px] md:w-[510px] md:pl-[24px]">
               <div className="flex flex-col gap-[12px]">
                 <h4 className="font-['Montserrat'] text-[20px] font-normal leading-[30px] text-[#252B42]">
-                  Floating Phone
+                  {product?.name || 'Product'}
                 </h4>
                 <div className="flex items-center gap-[10px]">
                   <div className="flex items-center gap-[5px] text-[#F3CD03]">
-                    <Star className="h-[22px] w-[22px] fill-current" />
-                    <Star className="h-[22px] w-[22px] fill-current" />
-                    <Star className="h-[22px] w-[22px] fill-current" />
-                    <Star className="h-[22px] w-[22px] fill-current" />
-                    <Star className="h-[22px] w-[22px] text-[#F3CD03]" />
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Star
+                        key={`rating-star-${index}`}
+                        className={`h-[22px] w-[22px] ${
+                          product?.rating && index < Math.round(product.rating)
+                            ? 'fill-current'
+                            : ''
+                        }`}
+                      />
+                    ))}
                   </div>
                   <span className="font-['Montserrat'] text-[14px] font-bold leading-[24px] text-[#737373]">
-                    10 Reviews
+                    {product?.rating ? product.rating.toFixed(2) : '0.00'} Rating
                   </span>
                 </div>
               </div>
 
               <div className="flex flex-col gap-[5px]">
                 <p className="font-['Montserrat'] text-[24px] font-bold leading-[32px] text-[#252B42]">
-                  $1,139.33
+                  ${product?.price ?? '--'}
                 </p>
                 <div className="flex items-center gap-[5px] font-['Montserrat'] text-[14px] font-bold leading-[24px]">
                   <span className="text-[#737373]">Availability :</span>
-                  <span className="text-[#23A6F0]">In Stock</span>
+                  <span className="text-[#23A6F0]">
+                    {product?.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                  </span>
                 </div>
               </div>
 
               <p className="font-['Montserrat'] text-[14px] font-normal leading-[20px] text-[#858585]">
-                Met minim Mollie non desert Alamo est sit cliquey dolor do
-                met sent. RELIT official consequent door ENIM RELIT Mollie.
-                Excitation venial consequent sent nostrum met.
+                {product?.description || 'No description available.'}
               </p>
 
               <div className="h-[1px] w-full bg-[#BDBDBD]" />
@@ -182,9 +360,11 @@ export default function ProductDetailPage() {
               <div className="flex flex-wrap items-center gap-[10px] pt-4">
                 <button
                   type="button"
-                  className="flex h-[44px] items-center justify-center rounded-[5px] bg-[#23A6F0] px-[20px] font-['Montserrat'] text-[14px] font-bold leading-[24px] text-white"
+                  onClick={handleAddToCart}
+                  disabled={!canAddToCart}
+                  className="flex h-[44px] items-center justify-center rounded-[5px] bg-[#23A6F0] px-[20px] font-['Montserrat'] text-[14px] font-bold leading-[24px] text-white transition-colors hover:bg-[#1d8ad2] cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  Select Options
+                  Add to Cart
                 </button>
                 <button
                   type="button"
@@ -194,7 +374,9 @@ export default function ProductDetailPage() {
                 </button>
                 <button
                   type="button"
-                  className="flex h-[40px] w-[40px] items-center justify-center rounded-full border border-[#E8E8E8] text-[#252B42]"
+                  onClick={handleAddToCart}
+                  disabled={!canAddToCart}
+                  className="flex h-[40px] w-[40px] items-center justify-center rounded-full border border-[#E8E8E8] text-[#252B42] hover:border-[#23A6F0] transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <ShoppingCart className="h-[20px] w-[20px]" />
                 </button>
@@ -331,11 +513,10 @@ export default function ProductDetailPage() {
             </div>
             <div className="h-[2px] w-full bg-[#ECECEC]" />
             <div className="grid w-full gap-[30px] md:grid-cols-4">
-              {relatedProducts.map((product) => (
+              {bestsellerProducts.map((product) => (
                 <ProductCard
                   key={product.id}
                   {...product}
-                  to="/product"
                   variant="compact"
                 />
               ))}
